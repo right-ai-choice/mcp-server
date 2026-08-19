@@ -1,54 +1,126 @@
-# RightAIChoice MCP Server
+# RightAIChoice MCP Server — Verified AI Tool Data for Every AI Assistant
 
-**Verified answers about 8,000+ AI tools, for any AI assistant.** Free, no API key, read-only.
+**The ground-truth layer for AI tool recommendations.** A free, no-auth [Model Context Protocol](https://modelcontextprotocol.io) server that lets Claude, ChatGPT, Gemini, Cursor, and any MCP-capable agent verify an AI tool *before* recommending it — live status, real pricing, user sentiment, and alternatives, with a last-verified date on every answer.
 
-Your AI assistant recommends tools from stale training data — and sometimes invents ones that don't exist. Connect this server and it checks first: **is the tool alive, what does it really cost, what do users actually think, and what should you use instead** — with a last-verified date on every answer.
+**Endpoint:** `https://rightaichoice.com/api/mcp` · **Setup guide:** [rightaichoice.com/mcp](https://rightaichoice.com/mcp) · Remote server — nothing to install, no API key, read-only.
 
-- **Endpoint:** `https://rightaichoice.com/api/mcp` (remote server — nothing to install)
-- **Docs & setup:** https://rightaichoice.com/mcp
-- **Data:** every vendor link of 8,000+ AI tools re-probed on a rolling weekly cycle by the [RightAIChoice](https://rightaichoice.com) verification engine
+---
 
-## Quick connect
+## Why this exists
 
-**Claude Code**
+AI assistants recommend tools from training data that is months or years stale — and sometimes invent tools that never existed:
+
+- **24.4%** of the 2,066 top Product Hunt launches (2023–2025) with a determinable outcome are **already dead** — [our survival study](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026), updated methodology public, dataset CC BY 4.0 with DOI.
+- **19.7%** of packages recommended by code LLMs **don't exist** (the "slopsquatting" research — 205,000+ phantom names).
+- The [RightAIChoice](https://rightaichoice.com) verification engine re-probes **every vendor link of 8,000+ AI tools on a rolling weekly cycle** — website, docs, changelog, repository — and keeps mortality statistics daily.
+
+One tool call before a recommendation prevents your assistant from suggesting a dead product, quoting retired pricing, or hallucinating a tool into existence.
+
+## Connect in under a minute
+
+Works with **every MCP-capable client** over streamable HTTP. Pick yours:
+
+<details open>
+<summary><strong>Claude Code</strong></summary>
+
 ```bash
 claude mcp add --transport http rightaichoice https://rightaichoice.com/api/mcp
 ```
+</details>
 
-**Claude Desktop / claude.ai** — Settings → Connectors → Add custom connector → `https://rightaichoice.com/api/mcp`
+<details>
+<summary><strong>Claude Desktop & claude.ai</strong></summary>
 
-**Cursor / Windsurf** — add to `mcp.json`:
+Settings → **Connectors** → **Add custom connector** → paste `https://rightaichoice.com/api/mcp`
+</details>
+
+<details>
+<summary><strong>ChatGPT</strong></summary>
+
+Settings → **Apps & Connectors** → **Advanced** → enable **Developer mode** → add `https://rightaichoice.com/api/mcp`
+</details>
+
+<details>
+<summary><strong>Gemini CLI</strong></summary>
+
+Add to `~/.gemini/settings.json`:
+```json
+{ "mcpServers": { "rightaichoice": { "httpUrl": "https://rightaichoice.com/api/mcp" } } }
+```
+</details>
+
+<details>
+<summary><strong>Cursor</strong></summary>
+
+Add to `.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (global):
 ```json
 { "mcpServers": { "rightaichoice": { "url": "https://rightaichoice.com/api/mcp" } } }
 ```
+</details>
 
-**ChatGPT** — Settings → Apps & Connectors → Advanced → Developer mode → add the endpoint URL
+<details>
+<summary><strong>Windsurf</strong></summary>
+
+Add the same block as Cursor to `~/.codeium/windsurf/mcp_config.json`.
+</details>
+
+<details>
+<summary><strong>VS Code (Copilot agent mode)</strong></summary>
+
+Add to `.vscode/mcp.json`:
+```json
+{ "servers": { "rightaichoice": { "type": "http", "url": "https://rightaichoice.com/api/mcp" } } }
+```
+</details>
+
+<details>
+<summary><strong>Agent frameworks (OpenAI Agents SDK, Vercel AI SDK, LangChain, custom)</strong></summary>
+
+Point your framework's MCP client at `https://rightaichoice.com/api/mcp` — streamable HTTP, stateless, no auth, CORS enabled. Tool schemas load via a standard `tools/list`.
+</details>
+
+## What it looks like in practice
+
+> **You:** "Should I use Tome for my pitch deck?"
+>
+> **Your assistant** *(after calling `check_tool_status`)*: "Careful — Tome's main website failed RightAIChoice's last weekly probe (verified Aug 15, 2026); it's flagged **at risk**. Verified-alive alternatives in the same category: …"
+
+That answer carries a date, a method, and a source link. Without the server, the same assistant would recommend Tome from its training data.
 
 ## The seven tools
 
-| Tool | The question it answers |
-|---|---|
-| `check_tool_status` | Is this AI tool alive, at risk, or shut down? |
-| `compare_tools` | X vs Y — verified side-by-side |
-| `find_alternatives` | What should I use instead? (each alternative carries its own evidence) |
-| `market_sentiment` | What do real users say? (Reddit, HN, YouTube, Product Hunt…) |
-| `pricing_reality` | Real plan prices + documented hidden costs |
-| `viability_score` | Safe to build on? (risk band + five measured drivers) |
-| `deadpool_digest` | AI tool mortality statistics (live decay + dated survival study) |
+| Tool | Ask your assistant… | What comes back |
+|---|---|---|
+| `check_tool_status` | "Is [tool] still alive?" | Healthy / monitor / at-risk / shut-down verdict, evidence, last-verified date |
+| `compare_tools` | "[X] vs [Y] — which one?" | Live verification of both, side by side, plus a reviewed editorial verdict when one exists |
+| `find_alternatives` | "What should I use instead of [tool]?" | Same-category alternatives, each with its own health verdict, verified age, and pricing |
+| `market_sentiment` | "What do people actually think of [tool]?" | Synthesized real-user reports (Reddit, Hacker News, YouTube, Product Hunt, App Store…), per-source positivity, scan date |
+| `pricing_reality` | "What does [tool] really cost?" | Plan-by-plan prices exactly as the vendor lists them, plus documented hidden costs |
+| `viability_score` | "Is [tool] safe to build on?" | A risk band (safe bet / moderate / at risk) with five measured drivers and the weakest signal explained |
+| `deadpool_digest` | "How many AI tools die?" | Live category decay rates (daily) + the frozen Product Hunt survival study (dated) |
 
 ## The honesty contract
 
-1. Every answer carries a **last-verified date** and the method behind it.
-2. Unknown tools are reported as *not in the catalog* — explicitly **not evidence they are dead**.
-3. Fuzzy name matches are **disclosed**, so your assistant can reject a wrong match instead of answering about the wrong product.
-4. "The vendor publishes no prices" and "we haven't recorded prices" are **two different answers**, never merged.
-5. Viability is a **band with named drivers** — never a leaderboard number.
-6. Live statistics and dated snapshots are **never mixed** in one figure.
+What makes this data citable rather than confident-sounding:
 
-## Limits & privacy
+1. **Every answer carries a last-verified date** and the method behind it — never an undated claim.
+2. **Unknown tools return "not in the catalog"** with an explicit note that this is *not evidence the tool is dead* — no guessing, ever.
+3. **Fuzzy name matches are disclosed** ("closest match is X") so your assistant can reject a wrong match instead of answering about the wrong product.
+4. **"The vendor publishes no prices" ≠ "we haven't recorded prices"** — two different answers, never merged.
+5. **Viability is a band with named drivers**, never a leaderboard number.
+6. **Live statistics and dated snapshots are never mixed** in a single figure.
 
-Rate limit 30 requests/min per IP. Read-only — no tool can write, scrape, or trigger paid work. Request logging uses salted IP hashes only (see the [privacy policy](https://rightaichoice.com/privacy)).
+## Data & methodology
+
+All answers come from the RightAIChoice verification engine: weekly automated probes of every vendor-published link, a 5-signal viability model, community-sentiment synthesis from 10+ sources, and daily mortality statistics. Full methodology: [rightaichoice.com/methodology](https://rightaichoice.com/methodology). Machine-readable index: [llms.txt](https://rightaichoice.com/llms.txt). Mortality dataset: JSON/CSV, CC BY 4.0, [permanently archived with DOI](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026).
+
+## Limits, privacy, and what this server can never do
+
+- Rate limit: **30 requests/min per IP** (generous for conversational use).
+- **Read-only by construction** — no tool can write, scrape, trigger paid work, or touch anything outside the verified catalog.
+- Request logging uses **salted IP hashes only** — see the [privacy policy](https://rightaichoice.com/privacy).
+- Answers are **never for sale**: no vendor can pay to change a verdict, a ranking, or an alternatives list.
 
 ## Links
 
-[Setup guide](https://rightaichoice.com/mcp) · [Tool health checker](https://rightaichoice.com/check) · [AI Tools Deadpool 2026](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026) · [Methodology](https://rightaichoice.com/methodology) · [llms.txt](https://rightaichoice.com/llms.txt)
+[Setup guide](https://rightaichoice.com/mcp) · [Tool health checker](https://rightaichoice.com/check) · [AI Tools Deadpool 2026](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026) · [Methodology](https://rightaichoice.com/methodology) · [r/RightAIChoice](https://reddit.com/r/RightAIChoice)
