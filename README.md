@@ -124,3 +124,7 @@ All answers come from the RightAIChoice verification engine: weekly automated pr
 ## Links
 
 [Setup guide](https://rightaichoice.com/mcp) · [Tool health checker](https://rightaichoice.com/check) · [AI Tools Deadpool 2026](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026) · [Methodology](https://rightaichoice.com/methodology) · [r/RightAIChoice](https://reddit.com/r/RightAIChoice)
+
+**If this saved your assistant from recommending a dead tool, a ⭐ helps other people find it.**
+
+MIT licensed. Built and maintained by [RightAIChoice](https://rightaichoice.com) — the verification engine for AI tools.
