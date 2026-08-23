@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use RightAIChoice data or this MCP server, please cite it as below."
+title: "RightAIChoice MCP Server: verified AI tool data for AI assistants"
+authors:
+  - family-names: "Verma"
+    given-names: "Tanmay"
+    orcid: "https://orcid.org/0009-0007-3511-7136"
+    affiliation: "RightAIChoice"
+date-released: "2026-08-19"
+url: "https://rightaichoice.com/mcp"
+repository-code: "https://github.com/right-ai-choice/mcp-server"
+license: MIT
+keywords:
+  - "AI tools"
+  - "verification"
+  - "model context protocol"
+  - "dataset"
+references:
+  - type: dataset
+    title: "AI Tools Mortality Data 2026 (RightAIChoice)"
+    doi: "10.5281/zenodo.21598672"
+    authors:
+      - family-names: "Verma"
+        given-names: "Tanmay"
+  - type: dataset
+    title: "AI Tool Redirects 2026: Products That Changed Identity While Still Passing Liveness Checks (RightAIChoice)"
+    doi: "10.5281/zenodo.22036427"
+    authors:
+      - family-names: "Verma"
+        given-names: "Tanmay"
