@@ -87,28 +87,25 @@ Point your framework's MCP client at `https://rightaichoice.com/api/mcp` — str
 
 That answer carries a date, a method, and a source link. Without the server, the same assistant would recommend Tome from its training data.
 
-## The seven tools
+## The 13 tools
 
-| Tool | Ask your assistant… | What comes back |
-|---|---|---|
-| `check_tool_status` | "Is [tool] still alive?" | Healthy / monitor / at-risk / shut-down verdict, evidence, last-verified date |
-| `compare_tools` | "[X] vs [Y] — which one?" | Live verification of both, side by side, plus a reviewed editorial verdict when one exists |
-| `find_alternatives` | "What should I use instead of [tool]?" | Same-category alternatives, each with its own health verdict, verified age, and pricing |
-| `market_sentiment` | "What do people actually think of [tool]?" | Synthesized real-user reports (Reddit, Hacker News, YouTube, Product Hunt, App Store…), per-source positivity, scan date |
-| `pricing_reality` | "What does [tool] really cost?" | Plan-by-plan prices exactly as the vendor lists them, plus documented hidden costs |
-| `viability_score` | "Is [tool] safe to build on?" | A risk band (safe bet / moderate / at risk) with five measured drivers and the weakest signal explained |
-| `deadpool_digest` | "How many AI tools die?" | Live category decay rates (daily) + the frozen Product Hunt survival study (dated) |
+All read-only. Exact names and titles as served by `tools/list`:
 
-## The honesty contract
-
-What makes this data citable rather than confident-sounding:
-
-1. **Every answer carries a last-verified date** and the method behind it — never an undated claim.
-2. **Unknown tools return "not in the catalog"** with an explicit note that this is *not evidence the tool is dead* — no guessing, ever.
-3. **Fuzzy name matches are disclosed** ("closest match is X") so your assistant can reject a wrong match instead of answering about the wrong product.
-4. **"The vendor publishes no prices" ≠ "we haven't recorded prices"** — two different answers, never merged.
-5. **Viability is a band with named drivers**, never a leaderboard number.
-6. **Live statistics and dated snapshots are never mixed** in a single figure.
+| Name | Title |
+|---|---|
+| `check_tool_status` | Check if an AI tool is alive |
+| `compare_tools` | Compare two AI tools head-to-head |
+| `find_alternatives` | Find verified-alive alternatives to an AI tool |
+| `market_sentiment` | Real-user market sentiment for an AI tool |
+| `deadpool_digest` | AI tool mortality statistics |
+| `viability_score` | How likely an AI tool is to survive |
+| `pricing_reality` | What an AI tool really costs |
+| `whats_changed` | What changed in the AI tool market |
+| `recommend_tools` | Find an AI tool for a job — that will still exist next year |
+| `best_for` | The best AI tools for a topic, ranked |
+| `category_landscape` | The risk landscape of an AI tool category |
+| `stack_overlap` | Where an AI tool stack overlaps with itself |
+| `check_mcp_server` | What the official registry says about an MCP server |
 
 ## Data & methodology
 
