@@ -107,6 +107,17 @@ All read-only. Exact names and titles as served by `tools/list`:
 | `stack_overlap` | Where an AI tool stack overlaps with itself |
 | `check_mcp_server` | What the official registry says about an MCP server |
 
+## The honesty contract
+
+What makes this data citable rather than confident-sounding:
+
+1. **Every answer carries a last-verified date** and the method behind it — never an undated claim.
+2. **Unknown tools return "not in the catalog"** with an explicit note that this is *not evidence the tool is dead* — no guessing, ever.
+3. **Fuzzy name matches are disclosed** ("closest match is X") so your assistant can reject a wrong match instead of answering about the wrong product.
+4. **"The vendor publishes no prices" ≠ "we haven't recorded prices"** — two different answers, never merged.
+5. **Viability is a band with named drivers**, never a leaderboard number.
+6. **Live statistics and dated snapshots are never mixed** in a single figure.
+
 ## Data & methodology
 
 All answers come from the RightAIChoice verification engine: weekly automated probes of every vendor-published link, a 5-signal viability model, community-sentiment synthesis from 10+ sources, and daily mortality statistics. Full methodology: [rightaichoice.com/methodology](https://rightaichoice.com/methodology). Machine-readable index: [llms.txt](https://rightaichoice.com/llms.txt). Mortality dataset: JSON/CSV, CC BY 4.0, [permanently archived with DOI](https://rightaichoice.com/state-of-ai-tools/ai-tools-deadpool-2026).
